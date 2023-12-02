@@ -15,7 +15,7 @@ name: Codacy Security Scan
 
 on:
   #push:
-#  pull_request:
+  pull_request:
   check_run:
   check_suite:
 
