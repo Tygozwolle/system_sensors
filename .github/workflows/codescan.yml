@@ -12,15 +12,15 @@
 name: "code scan"
 
 on:
-  push:
-  pull_request:
-  check_run:
+#  push:
+  #pull_request:
+  #check_run:
   check_suite:
   workflow_dispatch:
   
   
-  schedule:
-    - cron: '29 7 * * 4'
+  #schedule:
+  #  - cron: '29 7 * * 4'
 
 jobs:
   analyze:
