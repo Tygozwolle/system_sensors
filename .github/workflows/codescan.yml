@@ -15,7 +15,7 @@ on:
 #  push:
   pull_request:
   check_run:
-  check_suite:
+  #check_suite:
   workflow_dispatch:
   
   
