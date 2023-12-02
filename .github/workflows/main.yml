@@ -5,3 +5,12 @@ on:
   push:
   pull_request:
   check_run:
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy Stage
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://api.github.com/repos/Tygozwolle/rpi-system-sensors-docker/dispatches'
+        method: 'POST'
