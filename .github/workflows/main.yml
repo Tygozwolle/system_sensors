@@ -14,3 +14,4 @@ jobs:
       with:
         url: 'https://api.github.com/repos/Tygozwolle/rpi-system-sensors-docker/dispatches'
         method: 'POST'
+        data: '{"event_type":"on-demand-test","client_payload":{"unit":false,"integration":true}}'
