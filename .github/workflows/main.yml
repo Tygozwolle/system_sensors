@@ -5,6 +5,7 @@ on:
   push:
   pull_request:
   check_run:
+  repository_dispatch:
 jobs:
   deployment:
     runs-on: ubuntu-latest
