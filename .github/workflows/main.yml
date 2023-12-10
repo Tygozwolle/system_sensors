@@ -13,7 +13,7 @@ jobs:
       with:
           owner: Tygozwolle
           repo: rpi-system-sensors-docker
-          github_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           workflow_file_name: main.yml
           wait_interval: 10
           propagate_failure: false
