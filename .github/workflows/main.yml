@@ -15,7 +15,7 @@ jobs:
           repo: rpi-system-sensors-docker
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           workflow_file_name: main.yml
-          ref: test
+          ref: Test
           wait_interval: 10
           propagate_failure: false
           trigger_workflow: true
