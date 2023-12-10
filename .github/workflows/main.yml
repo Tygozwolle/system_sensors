@@ -9,7 +9,7 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-    - uses: convictional/trigger-workflow-and-wait@v1.6.1
+    - uses: convictional/trigger-workflow-and-wait@v1.6.5
       with:
           owner: Tygozwolle
           repo: rpi-system-sensors-docker
