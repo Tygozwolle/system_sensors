@@ -13,8 +13,7 @@ name: "code scan"
 
 on:
 #  push:
-  #pull_request:
-  #check_run:
+
   #check_suite:
   workflow_dispatch:
   

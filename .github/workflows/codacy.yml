@@ -15,10 +15,13 @@ name: Codacy Security Scan
 
 on:
   #push:
+
+
   #pull_request:
 #  check_run:
   #check_suite:
   workflow_dispatch:
+
 
     # The branches below must be a subset of the branches above
 #  schedule:
