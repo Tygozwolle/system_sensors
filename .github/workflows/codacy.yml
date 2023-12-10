@@ -16,7 +16,7 @@ name: Codacy Security Scan
 on:
   #push:
   pull_request:
-  check_run:
+#  check_run:
   #check_suite:
 
     # The branches below must be a subset of the branches above
