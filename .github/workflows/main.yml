@@ -9,9 +9,19 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy Stage
-      uses: fjogeleit/http-request-action@v1
-      with:
-        url: 'https://api.github.com/repos/Tygozwolle/rpi-system-sensors-docker/dispatches'
-        method: 'POST'
-        data: '{"event_type":"on-demand-test","client_payload":{"unit":false,"integration":true}}'
+      - uses: octokit/request-action@v2.x
+        id: create_check_run
+        with:
+          route: POST /repos/{owner}/{repo}/check-runs
+          owner: Tygozwolle
+          repo: rpi-system-sensors-docker
+          name: "testbuild"
+          head_sha: ${{ github.sha }}
+          output: | # The | is significant!
+            title: Test check run title
+            summary: A summary of the test check run
+            images:
+              - alt: Test image
+                image_url: https://octodex.github.com/images/jetpacktocat.png
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
