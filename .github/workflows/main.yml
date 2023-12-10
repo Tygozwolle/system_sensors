@@ -6,7 +6,7 @@ on:
   pull_request:
   check_run:
 jobs:
-  deployment:
+  test-docker-build:
     runs-on: ubuntu-latest
     steps:
     - uses: convictional/trigger-workflow-and-wait@v1.6.5
