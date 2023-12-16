@@ -3,6 +3,8 @@ name: testbuildexternal
 on:
   workflow_dispatch:
   push:
+  schedule:
+    - cron: "* 11 * * *"
   pull_request:
   check_run:
 jobs:
