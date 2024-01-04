@@ -196,6 +196,8 @@ def on_connect(client, userdata, flags, rc):
         sys.exit()
     else:
         write_message_to_console('Connection failed')
+        sys.exit()
+	
 
 def on_message(client, userdata, message):
     print (f'Message received: {message.payload.decode()}'  )
