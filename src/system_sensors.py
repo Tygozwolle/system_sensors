@@ -268,7 +268,7 @@ if __name__ == '__main__':
             # sleep for 10 minutes if broker is not reachable, i.e. network is down
             # Make this value configurable?
             # this feels like a dirty hack. Is there some other way to do this?
-            time.sleep(600)
+            time.sleep(120)
             exit()
     try:
         send_config_message(mqttClient)
