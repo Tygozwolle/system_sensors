@@ -269,6 +269,7 @@ if __name__ == '__main__':
             # Make this value configurable?
             # this feels like a dirty hack. Is there some other way to do this?
             time.sleep(600)
+            exit()
     try:
         send_config_message(mqttClient)
     except Exception as e:
