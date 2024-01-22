@@ -138,7 +138,7 @@ def get_display_status():
     
 def get_battery_status():
     try:
-        battery_percentage = str(psutil.sensors_battery().percent)
+        battery_percentage = str(round(psutil.sensors_battery().percent))
         return battery_percentage
     except Exception as e:
         print('Error while trying to obtain battery status'  + ' with exception: ' + str(e))
