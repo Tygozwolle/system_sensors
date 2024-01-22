@@ -322,7 +322,7 @@ sensors = {
                  'icon': 'thermometer',
                  'sensor_type': 'sensor',
                  'function': get_temp},
-              'battery':
+          'battery':
                 {'name':'battery',
                  'class': 'battey',
                  'state_class':'measurement',
