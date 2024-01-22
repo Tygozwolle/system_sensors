@@ -322,6 +322,14 @@ sensors = {
                  'icon': 'thermometer',
                  'sensor_type': 'sensor',
                  'function': get_temp},
+              'battery':
+                {'name':'battery',
+                 'class': 'battey',
+                 'state_class':'measurement',
+                 'unit': '%',
+                 'icon': 'battery-90',
+                 'sensor_type': 'sensor',
+                 'function': get_battery_percentage},
           'display':
                 {'name':'Display Switch',
                  'icon': 'monitor',
