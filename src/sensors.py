@@ -328,7 +328,7 @@ sensors = {
                  'class': 'battery',
                  'state_class':'measurement',
                  'unit': '%',
-                 'icon': 'battery-90',
+              #   'icon': 'battery-90',
                  'sensor_type': 'sensor',
                  'function': get_battery_status},
           'display':
