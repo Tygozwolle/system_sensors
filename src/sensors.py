@@ -329,7 +329,7 @@ sensors = {
                  'unit': '%',
                  'icon': 'battery-90',
                  'sensor_type': 'sensor',
-                 'function': get_battery_percentage},
+                 'function': get_battery_status},
           'display':
                 {'name':'Display Switch',
                  'icon': 'monitor',
