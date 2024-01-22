@@ -325,7 +325,7 @@ sensors = {
                  'function': get_temp},
           'battery':
                 {'name':'battery',
-                 'class': 'battey',
+                 'class': 'battery',
                  'state_class':'measurement',
                  'unit': '%',
                  'icon': 'battery-90',
