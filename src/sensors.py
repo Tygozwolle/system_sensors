@@ -135,7 +135,14 @@ def get_display_status():
     else:
         display_state = "Unknown"
     return display_state
-
+    
+def get_battery_status():
+    try:
+        battery_percentage = str(psutil.sensors_battery().percent)
+        return battery_percentage
+    except Exception as e:
+        #print('Error while trying to obtain disk usage from ' + str(path) + ' with exception: ' + str(e))
+        return None # Changed to return None for handling exception at function call location
 # Replaced with psutil method - does this not work fine?
 def get_clock_speed():
     clock_speed = int(psutil.cpu_freq().current)
