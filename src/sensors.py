@@ -135,7 +135,15 @@ def get_display_status():
     else:
         display_state = "Unknown"
     return display_state
-
+    
+def get_battery_status():
+    try:
+        battery_percentage = str(round((psutil.sensors_battery().percent), 1))
+        return battery_percentage
+    except Exception as e:
+        print('Error while trying to obtain battery status'  + ' with exception: ' + str(e))
+        return None # Changed to return None for handling exception at function call location
+        
 # Replaced with psutil method - does this not work fine?
 def get_clock_speed():
     clock_speed = int(psutil.cpu_freq().current)
@@ -315,6 +323,14 @@ sensors = {
                  'icon': 'thermometer',
                  'sensor_type': 'sensor',
                  'function': get_temp},
+          'battery':
+                {'name':'battery',
+                 'class': 'battery',
+                 'state_class':'measurement',
+                 'unit': '%',
+              #   'icon': 'battery-90',
+                 'sensor_type': 'sensor',
+                 'function': get_battery_status},
           'display':
                 {'name':'Display Switch',
                  'icon': 'monitor',
