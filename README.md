@@ -10,7 +10,7 @@
 
 I’ve created a simple python script that runs every 60 seconds and sends several system data over MQTT. It uses the MQTT Discovery for Home Assistant so you don’t need to configure anything in Home Assistant if you have discovery enabled for MQTT
 
-It currently logs the following data:
+It currently logs the following data: 
 
 - CPU usage
 - CPU temperature
