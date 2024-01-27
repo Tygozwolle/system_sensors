@@ -308,7 +308,7 @@ def hex2addr(hex_addr):
 def get_host_os():
     try:
         return OS_DATA['PRETTY_NAME']
-    except:
+    except Exception:
         return 'Unknown'
 
 def get_host_arch():
