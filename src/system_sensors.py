@@ -256,12 +256,15 @@ if __name__ == '__main__':
         mqttClient.username_pw_set(
             settings['mqtt']['user'], settings['mqtt']['password']
         )
+    try:
+        if 'ca_certs' in settings['tls']:
+          mqttClient.tls_set(
+            ca_certs=settings['tls']['ca_certs'], certfile=settings['tls']['certfile'], keyfile=settings['tls']['keyfile']
+          )
+    except:
+      write_message_to_console('no cert')
 
-    if 'ca_certs' in settings['tls']:
-      mqttClient.tls_set(
-        ca_certs=settings['tls']['ca_certs'], certfile=settings['tls']['certfile'], keyfile=settings['tls']['keyfile']
-      )
-
+    
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
 
