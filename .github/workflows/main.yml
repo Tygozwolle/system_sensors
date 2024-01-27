@@ -2,9 +2,9 @@ name: testbuildexternal
 
 on:
   workflow_dispatch:
-  push:
-  pull_request:
-  check_run:
+#  push:
+ # pull_request:
+  #check_run:
 jobs:
   deployment:
     runs-on: ubuntu-latest
