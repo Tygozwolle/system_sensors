@@ -149,11 +149,11 @@ Example:
 
 ![alt text](images/example.png?raw=true "Example")
 
-[commits-shield]: https://img.shields.io/github/commit-activity/y/Sennevds/system_sensors?style=for-the-badge
-[commits]: https://github.com/sennevds/system_sensors/commits/master
+[commits-shield]: https://img.shields.io/github/commit-activity/y/tygozwolle/system_sensors?style=for-the-badge
+[commits]: https://github.com/tygozwolle/system_sensors/commits/master
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/t/remote-rpi-system-monitor/129274
 [license-shield]: https://img.shields.io/github/license/sennevds/system_sensors.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/sennevds/system_sensors.svg?style=for-the-badge
-[releases]: https://github.com/sennevds/system_sensors/releases
+[releases-shield]: https://img.shields.io/github/release/tygozwolle/system_sensors.svg?style=for-the-badge
+[releases]: https://github.com/tygozwolle/system_sensors/releases
