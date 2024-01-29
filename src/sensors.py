@@ -118,20 +118,20 @@ def get_temp():
             raise
     return round(temp, 1) if temp != 'Unknown' else temp
 # Option to use thermal_zone readings instead of psutil
-             Option to use thermal_zone readings instead of psutil
+#             Option to use thermal_zone readings instead of psutil
 
-             base_dir = '/sys/class/thermal/'
-             zone_dir = ''
-             print('Could not cpu_thermal property. Checking thermal zone for x86 architecture')
-             for root, dir, files in walk(base_dir):
-                 for d in dir:
-                     if 'thermal_zone' in d:
-                         temp_type = str(subprocess.check_output(['cat', base_dir + d + '/type']).decode('UTF-8'))
-                         if 'x86' in temp_type:
-                             zone_dir = d
-                             break
-             temp = str(int(subprocess.check_output(['cat', base_dir + zone_dir + '/temp']).decode('UTF-8')) / 1000)
-"""
+#             base_dir = '/sys/class/thermal/'
+#             zone_dir = ''
+#             print('Could not cpu_thermal property. Checking thermal zone for x86 architecture')
+#             for root, dir, files in walk(base_dir):
+#                 for d in dir:
+#                     if 'thermal_zone' in d:
+#                         temp_type = str(subprocess.check_output(['cat', base_dir + d + '/type']).decode('UTF-8'))
+#                         if 'x86' in temp_type:
+#                             zone_dir = d
+#                             break
+#             temp = str(int(subprocess.check_output(['cat', base_dir + zone_dir + '/temp']).decode('UTF-8')) / 1000)
+
 # display power method depending on system distro
 def get_display_status():
     if "rasp" in OS_DATA["ID"]:
