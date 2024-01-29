@@ -117,7 +117,7 @@ def get_temp():
             print('Could not establish CPU temperature reading: ' + str(e))
             raise
     return round(temp, 1) if temp != 'Unknown' else temp
-"""
+# Option to use thermal_zone readings instead of psutil
              Option to use thermal_zone readings instead of psutil
 
              base_dir = '/sys/class/thermal/'
