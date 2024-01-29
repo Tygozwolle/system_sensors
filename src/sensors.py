@@ -148,7 +148,7 @@ def get_battery_status():
     except Exception as e:
         print('Error while trying to obtain battery status'  + ' with exception: ' + str(e))
         return None # Changed to return None for handling exception at function call location
-        
+
 # Replaced with psutil method - does this not work fine?
 def get_clock_speed():
     clock_speed = int(psutil.cpu_freq().current)
