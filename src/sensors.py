@@ -449,7 +449,7 @@ sensors = {
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
                  'function': get_net_data_rx},
-         'net_tx_data':
+          'net_tx_data':
                 {'name': 'Network Upload data',
                  'state_class':'total_increasing',
                  'unit': 'gb',
