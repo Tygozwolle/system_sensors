@@ -343,7 +343,7 @@ def get_net_data_tx_total(interface = True):
         current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][0]
     else:
         current_net_data = psutil.net_io_counters(nowrap=True)[0]
-   
+
     net_data = ((current_net_data) / 1000000000)
     return f"{net_data:.2f}"
 
@@ -353,7 +353,7 @@ def get_net_data_rx_total(interface = True):
         current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][1]
     else:
         current_net_data = psutil.net_io_counters(nowrap=True)[1]
-     
+
     net_data = ((current_net_data) / 1000000000)
     return f"{net_data:.2f}"
 
