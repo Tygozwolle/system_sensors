@@ -140,7 +140,7 @@ def get_display_status():
     else:
         display_state = "Unknown"
     return display_state
-    
+
 def get_battery_status():
     try:
         battery_percentage = str(round((psutil.sensors_battery().percent), 1))
