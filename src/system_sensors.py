@@ -220,7 +220,7 @@ if __name__ == '__main__':
     try:
         args = _parser().parse_args()
         settings_file = args.settings
-    except:
+    except Exception:
         write_message_to_console('Attempting to find settings file in same folder as ' + str(__file__))
         default_settings_path = str(pathlib.Path(__file__).parent.resolve()) + '/settings.yaml'
         if path.isfile(default_settings_path):
