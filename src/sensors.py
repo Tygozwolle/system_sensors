@@ -117,20 +117,20 @@ def get_temp():
             print('Could not establish CPU temperature reading: ' + str(e))
             raise
     return round(temp, 1) if temp != 'Unknown' else temp
+# Option to use thermal_zone readings instead of psutil
+#             Option to use thermal_zone readings instead of psutil
 
-            # Option to use thermal_zone readings instead of psutil
-
-            # base_dir = '/sys/class/thermal/'
-            # zone_dir = ''
-            # print('Could not cpu_thermal property. Checking thermal zone for x86 architecture')
-            # for root, dir, files in walk(base_dir):
-            #     for d in dir:
-            #         if 'thermal_zone' in d:
-            #             temp_type = str(subprocess.check_output(['cat', base_dir + d + '/type']).decode('UTF-8'))
-            #             if 'x86' in temp_type:
-            #                 zone_dir = d
-            #                 break
-            # temp = str(int(subprocess.check_output(['cat', base_dir + zone_dir + '/temp']).decode('UTF-8')) / 1000)
+#             base_dir = '/sys/class/thermal/'
+#             zone_dir = ''
+#             print('Could not cpu_thermal property. Checking thermal zone for x86 architecture')
+#             for root, dir, files in walk(base_dir):
+#                 for d in dir:
+#                     if 'thermal_zone' in d:
+#                         temp_type = str(subprocess.check_output(['cat', base_dir + d + '/type']).decode('UTF-8'))
+#                         if 'x86' in temp_type:
+#                             zone_dir = d
+#                             break
+#             temp = str(int(subprocess.check_output(['cat', base_dir + zone_dir + '/temp']).decode('UTF-8')) / 1000)
 
 # display power method depending on system distro
 def get_display_status():
@@ -140,7 +140,7 @@ def get_display_status():
     else:
         display_state = "Unknown"
     return display_state
-    
+
 def get_battery_status():
     try:
         battery_percentage = str(round((psutil.sensors_battery().percent), 1))
@@ -148,7 +148,7 @@ def get_battery_status():
     except Exception as e:
         print('Error while trying to obtain battery status'  + ' with exception: ' + str(e))
         return None # Changed to return None for handling exception at function call location
-        
+
 # Replaced with psutil method - does this not work fine?
 def get_clock_speed():
     clock_speed = int(psutil.cpu_freq().current)
@@ -343,7 +343,7 @@ def get_net_data_tx_total(interface = True):
         current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][0]
     else:
         current_net_data = psutil.net_io_counters(nowrap=True)[0]
-   
+
     net_data = ((current_net_data) / 1000000000)
     return f"{net_data:.2f}"
 
@@ -353,7 +353,7 @@ def get_net_data_rx_total(interface = True):
         current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][1]
     else:
         current_net_data = psutil.net_io_counters(nowrap=True)[1]
-     
+
     net_data = ((current_net_data) / 1000000000)
     return f"{net_data:.2f}"
 

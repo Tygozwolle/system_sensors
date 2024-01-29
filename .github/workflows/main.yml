@@ -2,7 +2,9 @@ name: testbuildexternal
 
 on:
   workflow_dispatch:
-#  push:
+  push: 
+    branches:
+    - staging
  # pull_request:
   #check_run:
 jobs:
@@ -14,9 +16,9 @@ jobs:
           owner: Tygozwolle
           repo: rpi-system-sensors-docker
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          workflow_file_name: main.yml
-          ref: master
+          workflow_file_name: docker-dev.yml
+          ref: staging
           wait_interval: 10
           propagate_failure: false
           trigger_workflow: true
-          wait_workflow: true
+          wait_workflow: false
