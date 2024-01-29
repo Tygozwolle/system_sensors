@@ -428,6 +428,20 @@ sensors = {
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
                  'function': get_net_data_rx},
+         'net_tx_data':
+                {'name': 'Network Upload data',
+                 'state_class':'total_increasing',
+                 'unit': 'gb',
+                 'icon': 'server-network',
+                 'sensor_type': 'sensor',
+                 'function': get_net_data_tx},
+          'net_rx_data':
+                {'name': 'Network Download data',
+                 'state_class':'total_increasing',
+                 'unit': 'gb',
+                 'icon': 'server-network',
+                 'sensor_type': 'sensor',
+                 'function': get_net_data_rx},
           'swap_usage':
                 {'name':'Swap Usage',
                  'state_class':'measurement',
