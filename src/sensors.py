@@ -200,10 +200,10 @@ def get_net_data_tx(interface = True):
     current_time = time.time()
     if current_time == previous_time_tx:
         current_time += 1
-    net_data = (current_net_data - old_net_data_tx) * 8 / (current_time - previous_time_tx) / 1024
+    net_data = (current_net_data - old_net_data_tx) * 8 / (current_time - previous_time_tx) / 1024 / 1024
     previous_time_tx = current_time
     old_net_data_tx = current_net_data
-    return f"{net_data:.2f}"
+    return f"{net_data:.3f}"
 
 def get_net_data_rx(interface = True):
     global old_net_data_rx
@@ -216,10 +216,10 @@ def get_net_data_rx(interface = True):
     current_time = time.time()
     if current_time == previous_time_rx:
         current_time += 1
-    net_data = (current_net_data - old_net_data_rx) * 8 / (current_time - previous_time_rx) / 1024
+    net_data = (current_net_data - old_net_data_rx) * 8 / (current_time - previous_time_rx) / 1024 / 1024
     previous_time_rx = current_time
     old_net_data_rx = current_net_data
-    return f"{net_data:.2f}"
+    return f"{net_data:.3f}"
 
 def get_cpu_usage():
     return str(psutil.cpu_percent(interval=None))
@@ -336,6 +336,26 @@ def zpool_base(pool) -> dict:
         'sensor_type': 'sensor',
         'function': lambda: get_zpool_use(f'{pool}')
         }
+# data network
+def get_net_data_tx_total(interface = True):
+    current_net_data = []
+    if type(interface) == str:
+        current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][0]
+    else:
+        current_net_data = psutil.net_io_counters(nowrap=True)[0]
+   
+    net_data = ((current_net_data) / 1000000000)
+    return f"{net_data:.2f}"
+
+def get_net_data_rx_total(interface = True):
+    current_net_data = []
+    if type(interface) == str:
+        current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][1]
+    else:
+        current_net_data = psutil.net_io_counters(nowrap=True)[1]
+     
+    net_data = ((current_net_data) / 1000000000)
+    return f"{net_data:.2f}"
 
 sensors = {
           'temperature':
@@ -417,17 +437,31 @@ sensors = {
           'net_tx':
                 {'name': 'Network Upload',
                  'state_class':'measurement',
-                 'unit': 'Kbps',
+                 'unit': 'Mbps',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
                  'function': get_net_data_tx},
           'net_rx':
                 {'name': 'Network Download',
                  'state_class':'measurement',
-                 'unit': 'Kbps',
+                 'unit': 'Mbps',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
                  'function': get_net_data_rx},
+          'net_tx_data':
+                {'name': 'Network Upload data',
+                 'state_class':'total_increasing',
+                 'unit': 'GB',
+                 'icon': 'server-network',
+                 'sensor_type': 'sensor',
+                 'function': get_net_data_tx_total},
+          'net_rx_data':
+                {'name': 'Network Download data',
+                 'state_class':'total_increasing',
+                 'unit': 'GB',
+                 'icon': 'server-network',
+                 'sensor_type': 'sensor',
+                 'function': get_net_data_rx_total},
           'swap_usage':
                 {'name':'Swap Usage',
                  'state_class':'measurement',
