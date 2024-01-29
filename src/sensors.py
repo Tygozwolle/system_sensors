@@ -451,14 +451,14 @@ sensors = {
                  'function': get_net_data_rx},
           'net_tx_data':
                 {'name': 'Network Upload data',
-                 'state_class':'total_increasing',
+                 'state_class':'measurement',
                  'unit': 'gb',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
                  'function': get_net_data_tx_total},
           'net_rx_data':
                 {'name': 'Network Download data',
-                 'state_class':'total_increasing',
+                 'state_class':'measurement',
                  'unit': 'gb',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
