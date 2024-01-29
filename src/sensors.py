@@ -337,37 +337,26 @@ def zpool_base(pool) -> dict:
         'function': lambda: get_zpool_use(f'{pool}')
         }
 # data network
-def get_net_data_tx(interface = True):
-    global old_net_data_tx
-    global previous_time_tx
+def get_net_data_tx_total(interface = True):
     current_net_data = []
     if type(interface) == str:
-        current_net_data = psutil.net_io_counters(pernic=True)[interface][0]
+        current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][0]
     else:
-        current_net_data = psutil.net_io_counters()[0]
-    current_time = time.time()
-    if current_time == previous_time_tx:
-        current_time += 1
-    net_data = (current_net_data - old_net_data_tx) * 8 / (current_time - previous_time_tx) / 1024
-    previous_time_tx = current_time
-    old_net_data_tx = current_net_data
+        current_net_data = psutil.net_io_counters(nowrap=True)[0]
+   
+    net_data = ((current_net_data) * 8  / 1024) / 1048576
     return f"{net_data:.2f}"
 
-def get_net_data_rx(interface = True):
-    global old_net_data_rx
-    global previous_time_rx
+def get_net_data_rx_total(interface = True):
     current_net_data = []
     if type(interface) == str:
-        current_net_data = psutil.net_io_counters(pernic=True)[interface][1]
+        current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][1]
     else:
-        current_net_data = psutil.net_io_counters()[1]
-    current_time = time.time()
-    if current_time == previous_time_rx:
-        current_time += 1
-    net_data = (current_net_data - old_net_data_rx) * 8 / (current_time - previous_time_rx) / 1024
-    previous_time_rx = current_time
-    old_net_data_rx = current_net_data
-    return f"{net_data:.2f}"    
+        current_net_data = psutil.net_io_counters(nowrap=True)[1]
+     
+    net_data = ((current_net_data) * 8  / 1024) / 1048576
+
+    return f"{net_data:.2f}"   
 
 sensors = {
           'temperature':
@@ -466,14 +455,14 @@ sensors = {
                  'unit': 'gb',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
-                 'function': get_net_data_tx},
+                 'function': get_net_data_tx_total},
           'net_rx_data':
                 {'name': 'Network Download data',
                  'state_class':'total_increasing',
                  'unit': 'gb',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
-                 'function': get_net_data_rx},
+                 'function': get_net_data_rx_total},
           'swap_usage':
                 {'name':'Swap Usage',
                  'state_class':'measurement',
