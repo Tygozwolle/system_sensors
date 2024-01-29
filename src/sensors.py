@@ -344,7 +344,7 @@ def get_net_data_tx_total(interface = True):
     else:
         current_net_data = psutil.net_io_counters(nowrap=True)[0]
    
-    net_data = ((current_net_data) * 8  / 1024) / 1048576
+    net_data = ((current_net_data) / 1000000000)
     return f"{net_data:.2f}"
 
 def get_net_data_rx_total(interface = True):
@@ -354,8 +354,7 @@ def get_net_data_rx_total(interface = True):
     else:
         current_net_data = psutil.net_io_counters(nowrap=True)[1]
      
-    net_data = ((current_net_data) * 8  / 1024) / 1048576
-
+    net_data = ((current_net_data) / 1000000000)
     return f"{net_data:.2f}"
 
 sensors = {
@@ -452,14 +451,14 @@ sensors = {
           'net_tx_data':
                 {'name': 'Network Upload data',
                  'state_class':'measurement',
-                 'unit': 'gb',
+                 'unit': 'GB',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
                  'function': get_net_data_tx_total},
           'net_rx_data':
                 {'name': 'Network Download data',
                  'state_class':'measurement',
-                 'unit': 'gb',
+                 'unit': 'GB',
                  'icon': 'server-network',
                  'sensor_type': 'sensor',
                  'function': get_net_data_rx_total},
