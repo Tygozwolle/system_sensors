@@ -179,7 +179,7 @@ def add_drives():
 # host model method depending on system distro
 def get_host_model():
     if "rasp" in OS_DATA["ID"] and isDockerized and isDeviceTreeModel:
-        model = subprocess.check_output(["cat", "/app/host/proc/device-tree/model"]).decode("UTF-8").strip()
+        model = subprocess.check_output(["cat", "/app/host/proc/device-tree/model"]).decode("UTF-8").strip() # nosec B603
         # remove a weird character breaking the json in mqtt explorer
         model = model[:-1]
     else:
@@ -209,10 +209,10 @@ def on_message(client, userdata, message):
     if message.payload.decode() == 'online':
         send_config_message(client)
     elif message.payload.decode() == "display_on":
-        reading = subprocess.check_output([vcgencmd, "display_power", "1"]).decode("UTF-8")
+        reading = subprocess.check_output([vcgencmd, "display_power", "1"]).decode("UTF-8") # nosec B603
         update_sensors()
     elif message.payload.decode() == "display_off":
-        reading = subprocess.check_output([vcgencmd, "display_power", "0"]).decode("UTF-8")
+        reading = subprocess.check_output([vcgencmd, "display_power", "0"]).decode("UTF-8") # nosec B603
         update_sensors()
 
 
