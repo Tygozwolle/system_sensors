@@ -6,7 +6,7 @@ import pytz
 import psutil
 import socket
 import platform
-import subprocess
+import subprocess # nosec B404
 import datetime as dt
 import sys
 import os
@@ -135,7 +135,7 @@ def get_temp():
 # display power method depending on system distro
 def get_display_status():
     if "rasp" in OS_DATA["ID"]:
-        reading = subprocess.check_output([vcgencmd, "display_power"]).decode("UTF-8")
+        reading = subprocess.check_output([vcgencmd, "display_power"]).decode("UTF-8")  # nosec B603
         display_state = str(re.findall("^display_power=(?P<display_state>[01]{1})$", reading)[0])
     else:
         display_state = "Unknown"
@@ -166,7 +166,7 @@ def get_zpool_use(pool):
     zpool_locations = ['/usr/sbin/zpool', '/sbin/zpool']
     zpool_binary = shutil.which("zpool") or next(filter(lambda l: os.path.isfile(l), zpool_locations), None)
     try:
-        zpool_percentage = str(subprocess.check_output(
+        zpool_percentage = str(subprocess.check_output(  # nosec B603
             [
                 zpool_binary,
                 'list',
@@ -228,7 +228,7 @@ def get_swap_usage():
     return str(psutil.swap_memory().percent)
 
 def get_wifi_strength():  # subprocess.check_output(['/proc/net/wireless', 'grep wlan0'])
-    wifi_strength_value = subprocess.check_output(
+    wifi_strength_value = subprocess.check_output(  # nosec B603
                               [
                                   'bash',
                                   '-c',
@@ -241,7 +241,7 @@ def get_wifi_strength():  # subprocess.check_output(['/proc/net/wireless', 'grep
 
 def get_wifi_ssid():
     try:
-        ssid = subprocess.check_output(
+        ssid = subprocess.check_output(  # nosec B603
                                   [
                                       'bash',
                                       '-c',
@@ -259,7 +259,7 @@ def get_rpi_power_status():
 
 def get_hostname():
     if isDockerized and isHostname:
-        host = subprocess.check_output(["cat", "/app/host/hostname"]).decode("UTF-8").strip()
+        host = subprocess.check_output(["cat", "/app/host/hostname"]).decode("UTF-8").strip()  # nosec B603
     else:
         host = socket.gethostname()
     return host
@@ -281,7 +281,7 @@ def get_host_ip():
             sock.close()
 
 def get_container_host_ip():
-     data = subprocess.check_output(["cat", "/app/host/system_sensor_pipe"]).decode("UTF-8")
+     data = subprocess.check_output(["cat", "/app/host/system_sensor_pipe"]).decode("UTF-8")  # nosec B603
      ip = ""
      for line in data.split('\n'):
          mo = re.match ("^.{2}(?P<id>.{2}).{2}(?P<addr>.{8})..{4} .{8}..{4} (?P<status>.{2}).*|", line)
@@ -314,7 +314,7 @@ def get_host_os():
 def get_host_arch():
     try:
         return platform.machine()
-    except:
+    except Exception:
         return 'Unknown'
 
 # Builds an external drive entry to fix incorrect usage reporting
