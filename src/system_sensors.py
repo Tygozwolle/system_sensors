@@ -179,7 +179,7 @@ def add_drives():
 # host model method depending on system distro
 def get_host_model():
     if "rasp" in OS_DATA["ID"] and isDockerized and isDeviceTreeModel:
-        model = subprocess.check_output(["cat", "/app/host/proc/device-tree/model"]).decode("UTF-8").strip() # nosec B603
+        model = subprocess.check_output(["cat", "/app/host/proc/device-tree/model"]).decode("UTF-8").strip()
         # remove a weird character breaking the json in mqtt explorer
         model = model[:-1]
     else:
@@ -209,10 +209,10 @@ def on_message(client, userdata, message):
     if message.payload.decode() == 'online':
         send_config_message(client)
     elif message.payload.decode() == "display_on":
-        reading = subprocess.check_output([vcgencmd, "display_power", "1"]).decode("UTF-8") # nosec B603
+        reading = subprocess.check_output([vcgencmd, "display_power", "1"]).decode("UTF-8")
         update_sensors()
     elif message.payload.decode() == "display_off":
-        reading = subprocess.check_output([vcgencmd, "display_power", "0"]).decode("UTF-8") # nosec B603
+        reading = subprocess.check_output([vcgencmd, "display_power", "0"]).decode("UTF-8")
         update_sensors()
 
 
@@ -220,7 +220,7 @@ if __name__ == '__main__':
     try:
         args = _parser().parse_args()
         settings_file = args.settings
-    except Exception:
+    except:
         write_message_to_console('Attempting to find settings file in same folder as ' + str(__file__))
         default_settings_path = str(pathlib.Path(__file__).parent.resolve()) + '/settings.yaml'
         if path.isfile(default_settings_path):
@@ -261,7 +261,7 @@ if __name__ == '__main__':
           mqttClient.tls_set(
             ca_certs=settings['tls']['ca_certs'], certfile=settings['tls']['certfile'], keyfile=settings['tls']['keyfile']
           )
-    except Exception:
+    except:
       write_message_to_console('no cert')
 
 
