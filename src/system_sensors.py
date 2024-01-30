@@ -212,7 +212,7 @@ def on_message(client, userdata, message):
         reading = subprocess.check_output([vcgencmd, "display_power", "1"]).decode("UTF-8")
         update_sensors()
     elif message.payload.decode() == "display_off":
-        reading = subprocess.check_output([vcgencmd, "display_power", "0"],shell=False).decode("UTF-8")
+        reading = subprocess.check_output([vcgencmd, "display_power", "0"]).decode("UTF-8") # nosec
         update_sensors()
 
 
