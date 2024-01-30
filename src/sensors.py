@@ -6,7 +6,7 @@ import pytz
 import psutil
 import socket
 import platform
-import subprocess
+import subprocess # nosec B404
 import datetime as dt
 import sys
 import os
