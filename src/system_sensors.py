@@ -261,7 +261,7 @@ if __name__ == '__main__':
           mqttClient.tls_set(
             ca_certs=settings['tls']['ca_certs'], certfile=settings['tls']['certfile'], keyfile=settings['tls']['keyfile']
           )
-    except:
+    except Exception:
       write_message_to_console('no cert')
 
 
