@@ -314,7 +314,7 @@ def get_host_os():
 def get_host_arch():
     try:
         return platform.machine()
-    except:
+    except Exception:
         return 'Unknown'
 
 # Builds an external drive entry to fix incorrect usage reporting
