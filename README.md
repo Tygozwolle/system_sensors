@@ -1,5 +1,7 @@
 # RPI System sensors
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/527c4aa94d634127955aec357ba0daa5)](https://app.codacy.com/gh/Tygozwolle/system_sensors?utm_source=github.com&utm_medium=referral&utm_content=Tygozwolle/system_sensors&utm_campaign=Badge_Grade)
+
 [![GitHub Release][releases-shield]][releases]
 [![License][license-shield]](LICENSE.md)
 
