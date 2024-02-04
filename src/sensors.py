@@ -42,7 +42,7 @@ except ImportError:
 isDockerized = bool(os.getenv('YES_YOU_ARE_IN_A_CONTAINER', False))
 isOsRelease = os.path.isfile('/app/host/os-release')
 isHostname = os.path.isfile('/app/host/hostname')
-isDeviceTreeModel = os.path.isfile('/app/host/proc/device-tree/model')
+is_device_tree_model = os.path.isfile('/app/host/proc/device-tree/model')
 isSystemSensorPipe = os.path.isfile('/app/host/system_sensor_pipe')
 
 vcgencmd   = "vcgencmd"
