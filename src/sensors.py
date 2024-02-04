@@ -88,7 +88,7 @@ def as_local(dattim: dt.datetime) -> dt.datetime:
     return dattim.astimezone(DEFAULT_TIME_ZONE)
 
 def utc_from_timestamp(timestamp: float) -> dt.datetime:
-  #  """Return a UTC time from a timestamp."""
+      # """Return a UTC time from a timestamp."""
     return UTC.localize(dt.datetime.utcfromtimestamp(timestamp))
 
 def get_last_boot():
