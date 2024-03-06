@@ -361,7 +361,7 @@ def get_fan_speed():
     try:
         return str(psutil.sensors_fans())
     except Exception as e:
-            print('Could not establish fan speed reading: ' + str(e))
+        print('Could not establish fan speed reading: ' + str(e))
         return None
 
 sensors = {
