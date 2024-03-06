@@ -360,7 +360,8 @@ def get_net_data_rx_total(interface = True):
 def get_fan_speed():
     try:
         return str(psutil.sensors_fans())
-    except:
+    except Exception as e:
+            print('Could not establish fan speed reading: ' + str(e))
         return None
 
 sensors = {
