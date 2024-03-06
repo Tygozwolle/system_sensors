@@ -362,8 +362,6 @@ def get_fan_speed():
         fan_speed = psutil.sensors_fans()
         for x in fan_speed:
             speedf = fan_speed[x][0].current
-            print(fan_speed)
-            print(speedf)
             return speedf
     except Exception as e:
         print('Could not establish fan speed reading: ' + str(e))
