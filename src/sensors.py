@@ -389,7 +389,7 @@ sensors = {
                #  'class': 'fan',
                  'state_class':'measurement',
                  'unit': 'RPM',
-              #   'icon': 'battery-90',
+                 'icon': 'mdi:fan',
                  'sensor_type': 'sensor',
                  'function': get_fan_speed},
           'display':
