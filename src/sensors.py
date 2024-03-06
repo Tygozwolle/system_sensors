@@ -359,7 +359,10 @@ def get_net_data_rx_total(interface = True):
 
 def get_fan_speed():
     try:
-        return str(psutil.sensors_fans())
+        fan_speed = psutil.sensors_fans()
+        for x in fan_speed:
+            speedf = fan_speed[x][0].current
+            return speedf
     except Exception as e:
         print('Could not establish fan speed reading: ' + str(e))
         return None
@@ -386,7 +389,7 @@ sensors = {
                #  'class': 'fan',
                  'state_class':'measurement',
                  'unit': 'RPM',
-              #   'icon': 'battery-90',
+                 'icon': 'fan',
                  'sensor_type': 'sensor',
                  'function': get_fan_speed},
           'display':
