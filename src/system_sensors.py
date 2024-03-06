@@ -178,7 +178,7 @@ def add_drives():
 
 # host model method depending on system distro
 def get_host_model():
-    if "rasp" in OS_DATA["ID"] and isDockerized and isDeviceTreeModel:
+    if "rasp" in OS_DATA["ID"] and isDockerized and is_device_tree_model:
         model = subprocess.check_output(["cat", "/app/host/proc/device-tree/model"]).decode("UTF-8").strip() # nosec B603
         # remove a weird character breaking the json in mqtt explorer
         model = model[:-1]
