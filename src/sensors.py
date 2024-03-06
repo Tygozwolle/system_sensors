@@ -357,6 +357,12 @@ def get_net_data_rx_total(interface = True):
     net_data = ((current_net_data) / 1000000000)
     return f"{net_data:.2f}"
 
+def get_fan_speed():
+    try:
+        return str(psutil.sensors_fans())
+    except:
+        return None
+
 sensors = {
           'temperature':
                 {'name':'Temperature',
@@ -374,6 +380,14 @@ sensors = {
               #   'icon': 'battery-90',
                  'sensor_type': 'sensor',
                  'function': get_battery_status},
+              'fan':
+                {'name':'fan',
+               #  'class': 'fan',
+                 'state_class':'measurement',
+                 'unit': 'RPM',
+              #   'icon': 'battery-90',
+                 'sensor_type': 'sensor',
+                 'function': get_fan_speed},
           'display':
                 {'name':'Display Switch',
                  'icon': 'monitor',
