@@ -1,4 +1,4 @@
-# RPI System sensors
+# RPI System sensors [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c3778b13cf1845839c980b7f716d45b6)](https://app.codacy.com/gh/Tygozwolle/system_sensors/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 [![GitHub Release][releases-shield]][releases]
 [![License][license-shield]](LICENSE.md)
@@ -157,3 +157,4 @@ Example:
 
 [releases-shield]: https://img.shields.io/github/release/tygozwolle/system_sensors.svg?style=for-the-badge
 [releases]: https://github.com/tygozwolle/system_sensors/releases
+
