@@ -369,7 +369,7 @@ def get_fan_speed():
         return None
 def get_load_GPU():
     try:
-        gpus = GPUtil.getGPUs()
+        gpus = GPUtil.getFirstAvailable()
         for gpu in gpus:
             load = gpu.load
             return load
@@ -378,7 +378,7 @@ def get_load_GPU():
         return None
 def get_temp_gpu():
     try:
-        gpus = GPUtil.getGPUs()
+        gpus = GPUtil.getFirstAvailable()
         for gpu in gpus:
             temp = gpu.temperature
             return temp
