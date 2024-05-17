@@ -12,6 +12,7 @@ import sys
 import os
 import shutil
 import json
+import GPUtil
 # import os.path
 
 class PropertyBag(dict):
@@ -366,6 +367,24 @@ def get_fan_speed():
     except Exception as e:
         print('Could not establish fan speed reading: ' + str(e))
         return None
+def get_load_GPU():
+    try:
+        gpus = GPUtil.getGPUs()
+        for gpu in gpus:
+            load = gpu.load
+            return load
+    except Exception as e:
+        print('Could not establish GPU load reading: ' + str(e))
+        return None
+def get_temp_gpu():
+    try:
+        gpus = GPUtil.getGPUs()
+        for gpu in gpus:
+            temp = gpu.temperature
+            return temp
+    except Exception as e:
+        print('Could not establish GPU temperature reading: ' + str(e))
+        return None
 
 sensors = {
           'temperature':
@@ -376,6 +395,22 @@ sensors = {
                  'icon': 'thermometer',
                  'sensor_type': 'sensor',
                  'function': get_temp},
+        'temperature_GPU':
+                {'name':'Temperature gpu',
+                 'class': 'temperature',
+                 'state_class':'measurement',
+                 'unit': '°C',
+                 'icon': 'thermometer',
+                 'sensor_type': 'sensor',
+                 'function': get_temp_gpu},
+          'load_GPU':
+                {'name':'load GPU',
+                 'state_class':'measurement',
+                 'unit': '%',
+                 'icon': 'chip',
+                 'sensor_type': 'sensor',
+                 'function': get_load_GPU},      
+                 
           'battery':
                 {'name':'battery',
                  'class': 'battery',
