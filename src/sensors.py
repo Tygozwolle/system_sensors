@@ -370,18 +370,18 @@ def get_fan_speed():
 def get_load_GPU():
     try:
         gpus = GPUtil.getGPUs()
-        for gpu in gpus:
-            load = gpu.load
-            return load
+        
+        load = gpus[0].load
+        return load
     except Exception as e:
         print('Could not establish GPU load reading: ' + str(e))
         return None
 def get_temp_gpu():
     try:
         gpus = GPUtil.getGPUs()
-        for gpu in gpus:
-            temp = gpu.temperature
-            return temp
+        
+        temp = gpus[0].temperature
+        return temp
     except Exception as e:
         print('Could not establish GPU temperature reading: ' + str(e))
         return None
