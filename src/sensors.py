@@ -339,6 +339,7 @@ def zpool_base(pool) -> dict:
 # data network
 def get_net_data_tx_total(interface = True):
     current_net_data = []
+    stats = psutil.net_if_stats()
     io_counters = psutil.net_io_counters(pernic=True)
     for nic, addrs in psutil.net_if_addrs().items():
         print(f"{nic}:")
