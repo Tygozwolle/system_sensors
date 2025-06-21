@@ -339,6 +339,51 @@ def zpool_base(pool) -> dict:
 # data network
 def get_net_data_tx_total(interface = True):
     current_net_data = []
+      io_counters = psutil.net_io_counters(pernic=True)
+    for nic, addrs in psutil.net_if_addrs().items():
+        print(f"{nic}:")
+        if nic in stats:
+            st = stats[nic]
+            print("    stats          : ", end='')
+            print(
+                "speed={}MB, duplex={}, mtu={}, up={}".format(
+                    st.speed,
+                    duplex_map[st.duplex],
+                    st.mtu,
+                    "yes" if st.isup else "no",
+                )
+            )
+        if nic in io_counters:
+            io = io_counters[nic]
+            print("    incoming       : ", end='')
+            print(
+                "bytes={}, pkts={}, errs={}, drops={}".format(
+                    bytes2human(io.bytes_recv),
+                    io.packets_recv,
+                    io.errin,
+                    io.dropin,
+                )
+            )
+            print("    outgoing       : ", end='')
+            print(
+                "bytes={}, pkts={}, errs={}, drops={}".format(
+                    bytes2human(io.bytes_sent),
+                    io.packets_sent,
+                    io.errout,
+                    io.dropout,
+                )
+            )
+        for addr in addrs:
+            fam = "    {:<4}".format(af_map.get(addr.family, addr.family))
+            print(fam, end="")
+            print(f" address   : {addr.address}")
+            if addr.broadcast:
+                print(f"         broadcast : {addr.broadcast}")
+            if addr.netmask:
+                print(f"         netmask   : {addr.netmask}")
+            if addr.ptp:
+                print(f"      p2p       : {addr.ptp}")
+        print()
     if type(interface) == str:
         current_net_data = psutil.net_io_counters(pernic=True,nowrap=True)[interface][0]
     else:
