@@ -11,6 +11,7 @@ import threading
 import paho.mqtt.client as mqtt
 
 from sensors import *
+from sensors import write_message_to_console
 
 
 mqttClient = None
@@ -187,22 +188,24 @@ def get_host_model():
         model = f'{deviceManufacturer} {deviceNameDisplay}'
     return model
 
+def on_disconnect(client, userdata, rc):
+    if rc != 0:
+        write_message_to_console('Unexpected disconnection from broker')
+    else:
+        write_message_to_console('Disconnected from broker')
+
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         write_message_to_console('Connected to broker')
-        print("subscribing : hass/status")
+        write_message_to_console("subscribing : hass/status")
         client.subscribe('hass/status')
-        print("subscribing : " + f"system-sensors/sensor/{devicename}/availability")
+        write_message_to_console("subscribing : " + f"system-sensors/sensor/{devicename}/availability")
         mqttClient.publish(f'system-sensors/sensor/{devicename}/availability', 'online', retain=True)
-        print("subscribing : " + f"system-sensors/sensor/{devicename}/command")
+        write_message_to_console("subscribing : " + f"system-sensors/sensor/{devicename}/command")
         client.subscribe(f"system-sensors/sensor/{devicename}/command")#subscribe
         client.publish(f"system-sensors/sensor/{devicename}/command", "setup", retain=True)
-    elif rc == 5:
-        write_message_to_console('Authentication failed.\n Exiting.')
-        sys.exit()
     else:
-        write_message_to_console('Connection failed')
-        sys.exit()
+        write_message_to_console('Connection failed with return code: ' + str(rc))
 
 def on_message(client, userdata, message):
     print (f'Message received: {message.payload.decode()}'  )
@@ -249,7 +252,9 @@ if __name__ == '__main__':
 
 
     mqttClient = mqtt.Client(client_id=settings['client_id'])
+    mqttClient.reconnect_delay_set(min_delay=1, max_delay=120)
     mqttClient.on_connect = on_connect                      #attach function to callback
+    mqttClient.on_disconnect = on_disconnect
     mqttClient.on_message = on_message
     mqttClient.will_set(f'system-sensors/sensor/{devicename}/availability', 'offline', retain=True)
     if 'user' in settings['mqtt']:
@@ -268,32 +273,24 @@ if __name__ == '__main__':
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
 
+    retry_delay = 2
     while True:
         try:
+            write_message_to_console(f"Connecting to broker: {settings['mqtt']['hostname']}")
             mqttClient.connect(settings['mqtt']['hostname'], settings['mqtt']['port'])
             break
-        except ConnectionRefusedError:
-            # sleep for 2 minutes if broker is unavailable and retry.
-            # Make this value configurable?
-            # this feels like a dirty hack. Is there some other way to do this?
-            time.sleep(120)
-            exit()
-        except OSError:
-            # sleep for 10 minutes if broker is not reachable, i.e. network is down
-            # Make this value configurable?
-            # this feels like a dirty hack. Is there some other way to do this?
-            time.sleep(120)
-            exit()
+        except (ConnectionRefusedError, OSError) as e:
+            write_message_to_console(f"Connection failed: {e}. Retrying in {retry_delay}s...")
+            time.sleep(retry_delay)
+            retry_delay = min(retry_delay * 2, 60)
     try:
         send_config_message(mqttClient)
     except Exception as e:
         write_message_to_console('Error while attempting to send config to MQTT host: ' + str(e))
-        exit()
     try:
         update_sensors()
     except Exception as e:
         write_message_to_console('Error while attempting to perform inital sensor update: ' + str(e))
-        exit()
 
     job = Job(interval=dt.timedelta(seconds=poll_interval), execute=update_sensors)
     job.start()

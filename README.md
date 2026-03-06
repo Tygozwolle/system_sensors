@@ -58,6 +58,13 @@ You need to have at least **python 3.6** installed to use System Sensors.
 | update_interval                 | false    | 60      | The update interval to send new values to the MQTT broker                                                                                       |
 | sensors                         | false    | \       | Enable/disable individual sensors (see example settings.yaml for how-to). Default is true for all sensors.                                      |
 
+# Resilience
+
+The application includes automatic reconnection logic to ensure continuous operation:
+- **Initial Connection**: If the MQTT broker is unavailable at startup, the script will retry connecting with an exponential backoff strategy (starting at 2 seconds, doubling up to a maximum of 60 seconds).
+- **Runtime Disconnection**: If the connection is lost during operation, the application will automatically attempt to reconnect with a randomized exponential backoff (between 1 and 120 seconds).
+- **Error Handling**: Failures in sending initial configuration or sensor updates are logged, but do not cause the application to exit.
+
 7. `python3 src/system_sensors.py src/settings.yaml`
 8. (optional) create a service to autostart the script at boot, copy  the content of the `example_system_sensors.service` file into the editor:
    1. `sudo systemctl edit --force --full system.sensors`
