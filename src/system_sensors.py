@@ -193,16 +193,21 @@ def on_connect(client, userdata, flags, rc):
         print("subscribing : hass/status")
         client.subscribe('hass/status')
         print("subscribing : " + f"system-sensors/sensor/{devicename}/availability")
-        mqttClient.publish(f'system-sensors/sensor/{devicename}/availability', 'online', retain=True)
+        client.publish(f'system-sensors/sensor/{devicename}/availability', 'online', retain=True)
         print("subscribing : " + f"system-sensors/sensor/{devicename}/command")
         client.subscribe(f"system-sensors/sensor/{devicename}/command")#subscribe
         client.publish(f"system-sensors/sensor/{devicename}/command", "setup", retain=True)
+        send_config_message(client)
     elif rc == 5:
         write_message_to_console('Authentication failed.\n Exiting.')
         sys.exit()
     else:
-        write_message_to_console('Connection failed')
-        sys.exit()
+        write_message_to_console('Connection failed with code: ' + str(rc))
+
+def on_disconnect(client, userdata, rc):
+    write_message_to_console('Disconnected from broker')
+    if rc != 0:
+        write_message_to_console('Unexpected disconnection, attempting to reconnect...')
 
 def on_message(client, userdata, message):
     print (f'Message received: {message.payload.decode()}'  )
@@ -250,7 +255,9 @@ if __name__ == '__main__':
 
     mqttClient = mqtt.Client(client_id=settings['client_id'])
     mqttClient.on_connect = on_connect                      #attach function to callback
+    mqttClient.on_disconnect = on_disconnect
     mqttClient.on_message = on_message
+    mqttClient.reconnect_delay_set(min_delay=1, max_delay=120)
     mqttClient.will_set(f'system-sensors/sensor/{devicename}/availability', 'offline', retain=True)
     if 'user' in settings['mqtt']:
         mqttClient.username_pw_set(
@@ -273,17 +280,11 @@ if __name__ == '__main__':
             mqttClient.connect(settings['mqtt']['hostname'], settings['mqtt']['port'])
             break
         except ConnectionRefusedError:
-            # sleep for 2 minutes if broker is unavailable and retry.
-            # Make this value configurable?
-            # this feels like a dirty hack. Is there some other way to do this?
-            time.sleep(120)
-            exit()
+            write_message_to_console('Connection refused. Retrying in 30 seconds...')
+            time.sleep(30)
         except OSError:
-            # sleep for 10 minutes if broker is not reachable, i.e. network is down
-            # Make this value configurable?
-            # this feels like a dirty hack. Is there some other way to do this?
-            time.sleep(120)
-            exit()
+            write_message_to_console('Network unavailable. Retrying in 30 seconds...')
+            time.sleep(30)
     try:
         send_config_message(mqttClient)
     except Exception as e:
